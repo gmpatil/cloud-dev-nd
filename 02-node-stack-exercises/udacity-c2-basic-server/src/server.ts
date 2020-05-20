@@ -68,15 +68,71 @@ import { Car, cars as cars_list } from './cars';
                 .send(`Welcome to the Cloud, ${name}!`);
   } );
 
-  // @TODO Add an endpoint to GET a list of cars
+  // Add an endpoint to GET a list of cars
   // it should be filterable by make with a query paramater
+  app.get( "/cars", 
+    async ( req: Request, res: Response ) => {
 
-  // @TODO Add an endpoint to get a specific car
+      let { make } = req.query;
+
+      if ( !make ) {
+        return res.status(200)
+                  .send(`${JSON.stringify(cars)}`);
+      }
+
+      let car : Car = cars.find((value : Car, index: number, obj: Car[]) => value.make == make);
+
+      if (! car) {
+        return res.status(404)
+                  .send(`Car make is not found`);        
+      }
+
+      return res.status(200)
+                .send(`Car ${JSON.stringify(car)} found for make ${make}!`);
+  } );
+
+  // Add an endpoint to get a specific car
   // it should require id
   // it should fail gracefully if no matching car is found
+  app.get( "/cars/:id", 
+  async ( req: Request, res: Response ) => {
 
-  /// @TODO Add an endpoint to post a new car to our list
+    let { id } = req.params;
+
+    // id can't be null, so no need to check.
+
+    let car : Car = cars.find((value : Car, index: number, obj: Car[]) => value.id == id);
+
+    if (! car) {
+      return res.status(400)
+                .send(`Car with Id ${id} not found`);        
+    }
+
+    return res.status(200)
+              .send(`Car ${JSON.stringify(car)} found for Id ${id}!`);
+  } );  
+
+  /// Add an endpoint to post a new car to our list
   // it should require id, type, model, and cost
+  app.post( "/cars", 
+  async ( req: Request, res: Response ) => {
+
+    let { id, make, model, type, cost} = req.body;
+    console.log(`id ${id} ${make} ${model} ${type} ${cost}`);
+
+    if (!id || !make || !model || !type || !cost) {
+
+      return res.status(400)
+      .send(`All Car attributes id, make, model, type are required.`);        
+    }
+
+    const car : Car = { id:id, make:make, model:model, type:type, cost: cost} ;
+
+    cars.push(car); 
+
+    return res.status(200)
+              .send(`Car ${JSON.stringify(car)} added!`);
+  } ); 
 
   // Start the Server
   app.listen( port, () => {

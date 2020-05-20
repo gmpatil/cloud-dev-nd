@@ -1,0 +1,492 @@
+{
+	"version": 1,
+	"collections": [
+		{
+			"id": "d90d0028-4d70-40b0-8c45-cb167bb0af08",
+			"name": "udacity-c2-basic-server",
+			"description": null,
+			"auth": null,
+			"events": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9c02ae8a-bb24-492f-9ec7-2680412eb5c0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "45aaca13-55c7-403f-ad00-14c79ccc23e5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"variables": [
+				{
+					"id": "0db39ab1-774e-4108-8078-7a4d7df27657",
+					"key": "endpoint",
+					"value": "http://localhost:8082",
+					"type": "string",
+					"disabled": false
+				}
+			],
+			"order": [
+				"b6052be2-a54e-425b-b8fa-cfa06b0c37c3",
+				"3ab6c514-7a78-4337-b264-0d39fb132a4d",
+				"7a6fea42-2dab-4724-8a36-854be75d2121",
+				"c2796e7e-cc52-495b-9340-a4cd8984e0f2",
+				"51b2ef2d-19b1-4e20-ab92-bbf9ed3b5edd"
+			],
+			"folders_order": [
+				"e907141f-377e-4783-8725-e8f7118f898c"
+			],
+			"protocolProfileBehavior": {},
+			"folders": [
+				{
+					"id": "e907141f-377e-4783-8725-e8f7118f898c",
+					"name": "exercise",
+					"description": null,
+					"auth": null,
+					"events": null,
+					"collection": "d90d0028-4d70-40b0-8c45-cb167bb0af08",
+					"folder": null,
+					"order": [
+						"2568a007-187e-45d3-9f6c-97c2519e8413",
+						"2a941c9d-a05b-4c9e-9e8a-dd8b1fcb9f8b",
+						"d193c546-ab81-4278-8328-f13c3d407cb4",
+						"23d12e47-9956-4328-be1b-e99f8ccffbca"
+					],
+					"folders_order": [],
+					"protocolProfileBehavior": {},
+					"collectionId": "d90d0028-4d70-40b0-8c45-cb167bb0af08",
+					"folderId": "e907141f-377e-4783-8725-e8f7118f898c"
+				}
+			],
+			"requests": [
+				{
+					"id": "23d12e47-9956-4328-be1b-e99f8ccffbca",
+					"name": "/cars",
+					"url": "http://localhost:8082/cars",
+					"description": null,
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"name": "Content-Type",
+							"value": "application/json",
+							"type": "text"
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "038d1dca-c56b-470f-bb0e-8083ecca86e3",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`{\"id\":9,\"make\":\"ford\",\"model\":\"focus\",\"type\":\"sedan\",\"cost\":12}`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e907141f-377e-4783-8725-e8f7118f898c",
+					"preRequestScript": null,
+					"tests": "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Body matches string\", function () {\n    pm.expect(pm.response.text()).to.include(`{\"id\":9,\"make\":\"ford\",\"model\":\"focus\",\"type\":\"sedan\",\"cost\":12}`);\n});",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "d90d0028-4d70-40b0-8c45-cb167bb0af08",
+					"rawModeData": "{ \"make\": \"ford\", \"type\": \"sedan\", \"model\": \"focus\", \"cost\": 12, \"id\": 9 }\n",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "2568a007-187e-45d3-9f6c-97c2519e8413",
+					"name": "/cars all",
+					"url": "http://localhost:8082/cars/",
+					"description": null,
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5bd1a54a-3a4d-4f4b-8a0a-880477f4ce18",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`{\"make\":\"honda\",\"type\":\"sedan\",\"model\":\"civic\",\"cost\":22,\"id\":3}`);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e907141f-377e-4783-8725-e8f7118f898c",
+					"preRequestScript": null,
+					"tests": "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Body matches string\", function () {\n    pm.expect(pm.response.text()).to.include(`{\"make\":\"honda\",\"type\":\"sedan\",\"model\":\"civic\",\"cost\":22,\"id\":3}`);\n});\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "d90d0028-4d70-40b0-8c45-cb167bb0af08",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "2a941c9d-a05b-4c9e-9e8a-dd8b1fcb9f8b",
+					"name": "/cars filter",
+					"url": "http://localhost:8082/cars/?make=toyota",
+					"description": null,
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [
+						{
+							"key": "make",
+							"value": "toyota",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						}
+					],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "886e3da8-7fdc-448c-9ea4-7c2968e3a4a0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`{\"make\":\"toyota\",\"type\":\"sedan\",\"model\":\"prius\",\"cost\":22,\"id\":2}`);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e907141f-377e-4783-8725-e8f7118f898c",
+					"preRequestScript": null,
+					"tests": "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Body matches string\", function () {\n    pm.expect(pm.response.text()).to.include(`{\"make\":\"toyota\",\"type\":\"sedan\",\"model\":\"prius\",\"cost\":22,\"id\":2}`);\n});\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "d90d0028-4d70-40b0-8c45-cb167bb0af08",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "3ab6c514-7a78-4337-b264-0d39fb132a4d",
+					"name": "http://localhost:8082/persons/george",
+					"url": "http://localhost:8082/persons/:name",
+					"description": null,
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [
+						{
+							"key": "name",
+							"value": "george"
+						}
+					],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3672beee-8391-4abc-a56a-39de457db544",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`Welcome to the Cloud, george!`);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": null,
+					"preRequestScript": null,
+					"tests": "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Body matches string\", function () {\n    pm.expect(pm.response.text()).to.include(`Welcome to the Cloud, george!`);\n});\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "d90d0028-4d70-40b0-8c45-cb167bb0af08",
+					"headers": "",
+					"pathVariables": {
+						"name": "george"
+					}
+				},
+				{
+					"id": "51b2ef2d-19b1-4e20-ab92-bbf9ed3b5edd",
+					"name": "400 http://localhost:8082/persons/:name",
+					"url": "http://localhost:8082/persons/",
+					"description": null,
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7c32954f-4ee2-4df7-a8a6-361a7a7b37fa",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": null,
+					"preRequestScript": null,
+					"tests": "pm.test(\"Status code is 400\", function () {\n    pm.response.to.have.status(400);\n});",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "d90d0028-4d70-40b0-8c45-cb167bb0af08",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "7a6fea42-2dab-4724-8a36-854be75d2121",
+					"name": "http://localhost:8082/persons/:name Copy",
+					"url": "http://localhost:8082/persons?name=george",
+					"description": null,
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [
+						{
+							"key": "name",
+							"value": "george"
+						}
+					],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ea633d9e-aa20-4f36-a78c-1f6d5d4d7e6d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    var query = {};",
+									"    pm.request.url.query.all().forEach((p) => { query[p.key] = p.value});",
+									"    ",
+									"    pm.expect(pm.response.text()).to.include(`Welcome to the Cloud, ${query['name']}!`);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": null,
+					"preRequestScript": null,
+					"tests": "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Body matches string\", function () {\n    var query = {};\n    pm.request.url.query.all().forEach((p) => { query[p.key] = p.value});\n    \n    pm.expect(pm.response.text()).to.include(`Welcome to the Cloud, ${query['name']}!`);\n});\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "d90d0028-4d70-40b0-8c45-cb167bb0af08",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "b6052be2-a54e-425b-b8fa-cfa06b0c37c3",
+					"name": "http://localhost:8082/",
+					"url": "http://localhost:8082/",
+					"description": null,
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": [],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cec0e8cf-5a3f-4e11-b346-631576e9fe9d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Welcome to the Cloud!\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": null,
+					"preRequestScript": null,
+					"tests": "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Body matches string\", function () {\n    pm.expect(pm.response.text()).to.include(\"Welcome to the Cloud!\");\n});",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "d90d0028-4d70-40b0-8c45-cb167bb0af08",
+					"headers": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "c2796e7e-cc52-495b-9340-a4cd8984e0f2",
+					"name": "http://localhost:8082/persons/",
+					"url": "http://localhost:8082/persons",
+					"description": null,
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"name": "Content-Type",
+							"value": "application/json",
+							"type": "text"
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "91b0b5b7-adb9-4f82-af7e-5f8d7bf6b77f",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`Welcome to the Cloud, james!`);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": null,
+					"preRequestScript": null,
+					"tests": "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Body matches string\", function () {\n    pm.expect(pm.response.text()).to.include(`Welcome to the Cloud, james!`);\n});\n",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "d90d0028-4d70-40b0-8c45-cb167bb0af08",
+					"rawModeData": "{\n    \"name\": \"james\"\n}",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "d193c546-ab81-4278-8328-f13c3d407cb4",
+					"name": "/cars by id",
+					"url": "http://localhost:8082/cars/2",
+					"description": null,
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": [
+						{
+							"key": "Content-Type",
+							"name": "Content-Type",
+							"value": "application/json",
+							"type": "text"
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f0779cf1-806f-497e-a14f-e2b0365c4d0c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`{\"make\":\"toyota\",\"type\":\"sedan\",\"model\":\"prius\",\"cost\":22,\"id\":2}`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": "e907141f-377e-4783-8725-e8f7118f898c",
+					"preRequestScript": null,
+					"tests": "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Body matches string\", function () {\n    pm.expect(pm.response.text()).to.include(`{\"make\":\"toyota\",\"type\":\"sedan\",\"model\":\"prius\",\"cost\":22,\"id\":2}`);\n});",
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "d90d0028-4d70-40b0-8c45-cb167bb0af08",
+					"headers": "Content-Type: application/json\n",
+					"pathVariables": {}
+				}
+			]
+		}
+	],
+	"environments": [
+		{
+			"id": "08e0a0c2-b38d-4a5c-ba5d-5c29beb280df",
+			"name": "My Workspace - globals",
+			"values": []
+		}
+	],
+	"headerPresets": [],
+	"globals": []
+}

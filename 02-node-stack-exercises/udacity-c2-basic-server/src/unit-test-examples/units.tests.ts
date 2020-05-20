@@ -1,4 +1,4 @@
-import { add, divide } from './units';
+import { add, divide, concat } from './units';
 
 import { expect } from 'chai';
 import 'mocha';
@@ -35,6 +35,50 @@ describe('divide', () => {
 
 });
 
-// @TODO try creating a new describe block for the "concat" method
+// try creating a new describe block for the "concat" method
 // it should contain an it block for each it statement in the units.ts @TODO.
 // don't forget to import the method ;)
+
+describe('concat', () => {
+
+  it('arg1 and null should return arg1 ', () => {
+    const result = concat('arg1' ,null);
+    expect(result).to.equal('arg1');
+  });
+
+  it('arg1 and undefined should return arg1 ', () => {
+    const result = concat('arg1' , undefined);
+    expect(result).to.equal('arg1');
+  });
+
+  it('null and arg1 should return arg1 ', () => {
+    const result = concat(null, 'arg1' );
+    expect(result).to.equal('arg1');
+  });
+
+  it('undefined and arg1 should return arg1 ', () => {
+    const result = concat(undefined, 'arg1' );
+    expect(result).to.equal('arg1');
+  });
+
+  it('arg1 and arg2 should return arg1arg2 ', () => {
+    const result = concat('arg1', 'arg2' );
+    expect(result).to.equal('arg1arg2');
+  });
+
+  it('should throw an error if null and null', () => {
+    expect(()=>{ concat(null, null ) }).to.throw('Both object can not be null or undefined')
+  });
+
+  it('should throw an error if null and undefined', () => {
+    expect(()=>{ concat(null, undefined ) }).to.throw('Both object can not be null or undefined')
+  });
+
+  it('should throw an error if undefined and null', () => {
+    expect(()=>{ concat(undefined, null ) }).to.throw('Both object can not be null or undefined')
+  });
+
+  it('should throw an error if undefined and undefined', () => {
+    expect(()=>{ concat(undefined, undefined ) }).to.throw('Both object can not be null or undefined')
+  });  
+});
