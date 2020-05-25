@@ -1,0 +1,435 @@
+{
+	"info": {
+		"_postman_id": "d90d0028-4d70-40b0-8c45-cb167bb0af08",
+		"name": "udacity-c2-basic-server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "exercise",
+			"item": [
+				{
+					"name": "/cars all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5bd1a54a-3a4d-4f4b-8a0a-880477f4ce18",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`{\"make\":\"honda\",\"type\":\"sedan\",\"model\":\"civic\",\"cost\":22,\"id\":3}`);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/cars/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"cars",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cars filter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "886e3da8-7fdc-448c-9ea4-7c2968e3a4a0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`{\"make\":\"toyota\",\"type\":\"sedan\",\"model\":\"prius\",\"cost\":22,\"id\":2}`);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/cars/?make=toyota",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"cars",
+								""
+							],
+							"query": [
+								{
+									"key": "make",
+									"value": "toyota"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cars by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f0779cf1-806f-497e-a14f-e2b0365c4d0c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`{\"make\":\"toyota\",\"type\":\"sedan\",\"model\":\"prius\",\"cost\":22,\"id\":2}`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8082/cars/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"cars",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cars",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "038d1dca-c56b-470f-bb0e-8083ecca86e3",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`{\"id\":9,\"make\":\"ford\",\"model\":\"focus\",\"type\":\"sedan\",\"cost\":12}`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"make\": \"ford\", \"type\": \"sedan\", \"model\": \"focus\", \"cost\": 12, \"id\": 9 }\n"
+						},
+						"url": {
+							"raw": "http://localhost:8082/cars",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"cars"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "http://localhost:8082/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cec0e8cf-5a3f-4e11-b346-631576e9fe9d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Welcome to the Cloud!\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8082/persons/george",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3672beee-8391-4abc-a56a-39de457db544",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(`Welcome to the Cloud, george!`);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/persons/:name",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"persons",
+						":name"
+					],
+					"variable": [
+						{
+							"key": "name",
+							"value": "george"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8082/persons/:name Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ea633d9e-aa20-4f36-a78c-1f6d5d4d7e6d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    var query = {};",
+							"    pm.request.url.query.all().forEach((p) => { query[p.key] = p.value});",
+							"    ",
+							"    pm.expect(pm.response.text()).to.include(`Welcome to the Cloud, ${query['name']}!`);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/persons?name=george",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"persons"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "george"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8082/persons/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "91b0b5b7-adb9-4f82-af7e-5f8d7bf6b77f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(`Welcome to the Cloud, james!`);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"james\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8082/persons",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"persons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "400 http://localhost:8082/persons/:name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7c32954f-4ee2-4df7-a8a6-361a7a7b37fa",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/persons/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"persons",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "9c02ae8a-bb24-492f-9ec7-2680412eb5c0",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "45aaca13-55c7-403f-ad00-14c79ccc23e5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "0db39ab1-774e-4108-8078-7a4d7df27657",
+			"key": "endpoint",
+			"value": "http://localhost:8082",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
