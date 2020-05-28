@@ -12,6 +12,6 @@ export const config = {
     "dialect": process.env.DB_DIALECT,
   },  
   "jwt": {
-    "secret": "helloooWorld"
+    "secret": process.env.JWT_SECRET
   }
 }
