@@ -457,6 +457,100 @@
 			"name": "Authorized",
 			"item": [
 				{
+					"name": "Get Signed URL for PUT - /api/v0/feed/signed-url/:fileName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fe945ba8-5e38-44e8-8303-bdcebf3b611e",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"The post returns a new item with an url\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.url).to.not.eql(null);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"SignedURLForFilePut1\", jsonData.url);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v0/feed/signed-url/:fileName",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v0",
+								"feed",
+								"signed-url",
+								":fileName"
+							],
+							"variable": [
+								{
+									"key": "fileName",
+									"value": "tigger.jpg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT resource in to S3 using signed URL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "94d09617-c3d1-4c99-aeff-a11dc92a4b7a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 700ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(700);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": "tigger.jpg"
+							}
+						},
+						"url": {
+							"raw": "{{SignedURLForFilePut1}}",
+							"host": [
+								"{{SignedURLForFilePut1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/api/v0/feed invalid",
 					"event": [
 						{
@@ -511,7 +605,7 @@
 					"response": []
 				},
 				{
-					"name": "/api/v0/feed authorized",
+					"name": "Get Signed URL for GET  - /api/v0/feed authorized",
 					"event": [
 						{
 							"listen": "test",
@@ -529,7 +623,10 @@
 									"",
 									"pm.test(\"Response time is less than 200ms\", function () {",
 									"    pm.expect(pm.response.responseTime).to.be.below(200);",
-									"});"
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"SignedURLForFileGet1\", jsonData.url);"
 								],
 								"type": "text/javascript"
 							}
@@ -547,7 +644,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"caption\": \"Hello\",\n    \"url\": \"test.jpg\"\n}"
+							"raw": "{\n    \"caption\": \"Tigger Tiger\",\n    \"url\": \"tigger.jpg\"\n}"
 						},
 						"url": {
 							"raw": "{{host}}/api/v0/feed",
@@ -565,166 +662,58 @@
 					"response": []
 				},
 				{
-					"name": "/api/v0/feed/signed-url/:fileName",
+					"name": "GET S3 Resource Using Signed URL",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "fe945ba8-5e38-44e8-8303-bdcebf3b611e",
+								"id": "5e9e78e8-5434-499a-a3bb-8b318151f01b",
 								"exec": [
-									"pm.test(\"Status code is 201\", function () {",
-									"    pm.response.to.have.status(201);",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"The post returns a new item with an url\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.url).to.not.eql(null);",
+									"pm.test(\"The post returns content type image/jpg\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql('image/jpeg');",
+									"    pm.expect(pm.response.headers.get(\"Content-Length\")).to.eql('62322');",
 									"});",
 									"",
-									"pm.test(\"Response time is less than 200ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"pm.test(\"The post returns content length 62kb\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Length\")).to.eql('62322');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 400ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);",
 									"});"
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{host}}/api/v0/feed/signed-url/:fileName",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v0",
-								"feed",
-								"signed-url",
-								":fileName"
-							],
-							"variable": [
-								{
-									"key": "fileName",
-									"value": "Oxalis_tetraphylla_flower.jpg"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "https://udagram-gmp-dev.s3.us-west-1.amazonaws.com/SavingtheAsiaticLiononTheLionKingdomAnimalPlanet.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAW5MZBAHU5QEIT2HS%2F20200527%2Fus-west-1%2Fs3%2Faws4_request&X-Amz-Date=20200527T043037Z&X-Amz-Expires=300&X-Amz-Signature=a5ce7a1e1361d235f033528efa876319db75435e0856e1bea3f652fec157759a&X-Amz-SignedHeaders=host",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "PUT",
-						"header": [],
 						"body": {
 							"mode": "file",
 							"file": {
-								"src": "/home/girish/Pictures/SavingtheAsiaticLiononTheLionKingdomAnimalPlanet.jpg"
+								"src": ""
 							}
 						},
 						"url": {
-							"raw": "https://udagram-gmp-dev.s3.us-west-1.amazonaws.com/SavingtheAsiaticLiononTheLionKingdomAnimalPlanet.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAW5MZBAHU5QEIT2HS%2F20200527%2Fus-west-1%2Fs3%2Faws4_request&X-Amz-Date=20200527T043037Z&X-Amz-Expires=300&X-Amz-Signature=a5ce7a1e1361d235f033528efa876319db75435e0856e1bea3f652fec157759a&X-Amz-SignedHeaders=host",
-							"protocol": "https",
+							"raw": "{{SignedURLForFileGet1}}",
 							"host": [
-								"udagram-gmp-dev",
-								"s3",
-								"us-west-1",
-								"amazonaws",
-								"com"
-							],
-							"path": [
-								"SavingtheAsiaticLiononTheLionKingdomAnimalPlanet.jpg"
-							],
-							"query": [
-								{
-									"key": "X-Amz-Algorithm",
-									"value": "AWS4-HMAC-SHA256"
-								},
-								{
-									"key": "X-Amz-Credential",
-									"value": "AKIAW5MZBAHU5QEIT2HS%2F20200527%2Fus-west-1%2Fs3%2Faws4_request"
-								},
-								{
-									"key": "X-Amz-Date",
-									"value": "20200527T043037Z"
-								},
-								{
-									"key": "X-Amz-Expires",
-									"value": "300"
-								},
-								{
-									"key": "X-Amz-Signature",
-									"value": "a5ce7a1e1361d235f033528efa876319db75435e0856e1bea3f652fec157759a"
-								},
-								{
-									"key": "X-Amz-SignedHeaders",
-									"value": "host"
-								}
+								"{{SignedURLForFileGet1}}"
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "https://udagram-gmp-dev.s3.us-west-1.amazonaws.com/Oxalis_tetraphylla_flower.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAW5MZBAHU5QEIT2HS%2F20200527%2Fus-west-1%2Fs3%2Faws4_request&X-Amz-Date=20200527T084320Z&X-Amz-Expires=300&X-Amz-Signature=3a6b1b5da6e0e674bd360b20037d373e9341a69f670bb144ad6d84be1d14fa79&X-Amz-SignedHeaders=host",
-					"request": {
-						"auth": {
-							"type": "noauth"
 						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "file",
-							"file": {
-								"src": "/home/girish/Pictures/Oxalis_tetraphylla_flower.jpg"
-							}
-						},
-						"url": {
-							"raw": "https://udagram-gmp-dev.s3.us-west-1.amazonaws.com/Oxalis_tetraphylla_flower.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAW5MZBAHU5QEIT2HS%2F20200527%2Fus-west-1%2Fs3%2Faws4_request&X-Amz-Date=20200527T084320Z&X-Amz-Expires=300&X-Amz-Signature=3a6b1b5da6e0e674bd360b20037d373e9341a69f670bb144ad6d84be1d14fa79&X-Amz-SignedHeaders=host",
-							"protocol": "https",
-							"host": [
-								"udagram-gmp-dev",
-								"s3",
-								"us-west-1",
-								"amazonaws",
-								"com"
-							],
-							"path": [
-								"Oxalis_tetraphylla_flower.jpg"
-							],
-							"query": [
-								{
-									"key": "X-Amz-Algorithm",
-									"value": "AWS4-HMAC-SHA256"
-								},
-								{
-									"key": "X-Amz-Credential",
-									"value": "AKIAW5MZBAHU5QEIT2HS%2F20200527%2Fus-west-1%2Fs3%2Faws4_request"
-								},
-								{
-									"key": "X-Amz-Date",
-									"value": "20200527T084320Z"
-								},
-								{
-									"key": "X-Amz-Expires",
-									"value": "300"
-								},
-								{
-									"key": "X-Amz-Signature",
-									"value": "3a6b1b5da6e0e674bd360b20037d373e9341a69f670bb144ad6d84be1d14fa79"
-								},
-								{
-									"key": "X-Amz-SignedHeaders",
-									"value": "host"
-								}
-							]
-						}
+						"description": "Get Image file using signed URL"
 					},
 					"response": []
 				}
