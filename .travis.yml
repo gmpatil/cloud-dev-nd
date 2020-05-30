@@ -1,4 +1,3 @@
-# This file is not pickedup, one in the Git root is.
 language: node_js
 node_js:
   - 13
@@ -6,16 +5,20 @@ node_js:
 services:
   - docker
 
-before_script:
+before_install:
+  - echo `pwd`
   - cd 03-micoservices-exercises/travis_ci
+  - echo `pwd`
   
 # Pre-testing installs
 install:
   - echo "nothing needs to be installed"
+  - echo `pwd`
 
 # Scripts to be run such as tests
 before_script:
   - echo "no tests"
+  - echo `pwd`  
 
 script:
   - docker --version # print the version for logging

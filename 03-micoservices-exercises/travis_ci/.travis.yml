@@ -6,13 +6,20 @@ node_js:
 services:
   - docker
 
+before_install:
+  - echo `pwd`
+  - cd 03-micoservices-exercises/travis_ci
+  - echo `pwd`
+  
 # Pre-testing installs
 install:
   - echo "nothing needs to be installed"
+  - echo `pwd`
 
 # Scripts to be run such as tests
 before_script:
   - echo "no tests"
+  - echo `pwd`  
 
 script:
   - docker --version # print the version for logging
@@ -22,4 +29,3 @@ script:
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push gmpatil/simple-node
-
