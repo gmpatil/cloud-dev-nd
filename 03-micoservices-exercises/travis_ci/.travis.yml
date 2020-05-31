@@ -23,7 +23,7 @@ before_script:
 
 script:
   - docker --version # print the version for logging
-  - docker build -t simple-node .
+  - docker build --build-arg TRAVIS_BUILD_NUMBER -t simple-node .
   - docker tag simple-node gmpatil/simple-node:latest
 
 after_success:

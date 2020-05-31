@@ -14,6 +14,12 @@ RUN npm install
 # Copy app source
 COPY . .
 
+# Set Env variables
+ARG TRAVIS_BUILD_NUMBER=0
+ENV BUILD_NUM=$TRAVIS_BUILD_NUMBER
+
+ENV FAVORITE_FOOD=Pitza
+
 # Bind the port that the image will run on
 EXPOSE 8080
 
