@@ -1,0 +1,29 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simpe-node-app
+  labels:
+    app: simpe-node-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: simpe-node-app
+  template:
+    metadata:
+      labels:
+        app: simpe-node-app
+    spec:
+      containers:
+      - name: simple-node
+        image: gmpatil/simple-node
+        ports:
+        - containerPort: 80
+      livenessProbe:
+        httpGet:
+            path: /health
+            port: 8080
+        initialDelaySeconds: 3
+        periodSeconds: 3
+        
