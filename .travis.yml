@@ -2,39 +2,6 @@
 # to build gmpatil/simple-reverse-proxy docker image
 #
 
-# language: node_js
-# node_js:
-#   - 13
-
-# services:
-#   - docker
-
-# before_install:
-#   - echo `pwd`
-#   - cd 04-kubernetes/reverse-proxy
-#   - echo `pwd`
-
-# # Pre-testing installs
-# install:
-#   - echo "nothing needs to be installed"
-
-# # Scripts to be run such as tests
-# before_script:
-#   - echo "no tests"
-
-# script:
-#   - docker --version # print the version for logging
-#   - docker build -t simple-reverse-proxy .
-#   - docker tag simple-reverse-proxy gmpatil/simple-reverse-proxy:latest
-
-# after_success:
-#   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-#   - docker push gmpatil/simple-reverse-proxy
-
-#
-# to build gmpatil/simple-express docker image
-#
-
 language: node_js
 node_js:
   - 13
@@ -44,7 +11,7 @@ services:
 
 before_install:
   - echo `pwd`
-  - cd 04-kubernetes/simple-express
+  - cd 04-kubernetes/reverse-proxy
   - echo `pwd`
 
 # Pre-testing installs
@@ -57,12 +24,45 @@ before_script:
 
 script:
   - docker --version # print the version for logging
-  - docker build -t simple-express .
-  - docker tag simple-express gmpatil/simple-express:latest
+  - docker build -t simple-reverse-proxy .
+  - docker tag simple-reverse-proxy gmpatil/simple-reverse-proxy:latest
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push gmpatil/simple-express
+  - docker push gmpatil/simple-reverse-proxy
+
+#
+# to build gmpatil/simple-express docker image
+#
+
+# language: node_js
+# node_js:
+#   - 13
+
+# services:
+#   - docker
+
+# before_install:
+#   - echo `pwd`
+#   - cd 04-kubernetes/simple-express
+#   - echo `pwd`
+
+# # Pre-testing installs
+# install:
+#   - echo "nothing needs to be installed"
+
+# # Scripts to be run such as tests
+# before_script:
+#   - echo "no tests"
+
+# script:
+#   - docker --version # print the version for logging
+#   - docker build -t simple-express .
+#   - docker tag simple-express gmpatil/simple-express:latest
+
+# after_success:
+#   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+#   - docker push gmpatil/simple-express
 
 #
 # to build gmpatil/simple-node docker image
