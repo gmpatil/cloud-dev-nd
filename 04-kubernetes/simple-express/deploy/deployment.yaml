@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sim-exp
+  labels:
+    app: sim-exp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sim-exp
+  template:
+    metadata:
+      labels:
+        app: sim-exp
+    spec:
+      containers:
+      - name: simple-express
+        image: gmpatil/simple-express
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
