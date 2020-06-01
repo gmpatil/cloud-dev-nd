@@ -2,34 +2,34 @@
 # to build gmpatil/simple-reverse-proxy docker image
 #
 
-language: node_js
-node_js:
-  - 13
+# language: node_js
+# node_js:
+#   - 13
 
-services:
-  - docker
+# services:
+#   - docker
 
-before_install:
-  - echo `pwd`
-  - cd 04-kubernetes/reverse-proxy
-  - echo `pwd`
+# before_install:
+#   - echo `pwd`
+#   - cd 04-kubernetes/reverse-proxy
+#   - echo `pwd`
 
-# Pre-testing installs
-install:
-  - echo "nothing needs to be installed"
+# # Pre-testing installs
+# install:
+#   - echo "nothing needs to be installed"
 
-# Scripts to be run such as tests
-before_script:
-  - echo "no tests"
+# # Scripts to be run such as tests
+# before_script:
+#   - echo "no tests"
 
-script:
-  - docker --version # print the version for logging
-  - docker build -t simple-reverse-proxy .
-  - docker tag simple-reverse-proxy gmpatil/simple-reverse-proxy:latest
+# script:
+#   - docker --version # print the version for logging
+#   - docker build -t simple-reverse-proxy .
+#   - docker tag simple-reverse-proxy gmpatil/simple-reverse-proxy:latest
 
-after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push gmpatil/simple-reverse-proxy
+# after_success:
+#   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+#   - docker push gmpatil/simple-reverse-proxy
 
 #
 # to build gmpatil/simple-express docker image
